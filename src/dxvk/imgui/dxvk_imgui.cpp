@@ -1478,11 +1478,12 @@ namespace dxvk {
     }
 
     // Latency Reduction Settings
-    if (dlfgSupported) {
-      ImGui::Dummy(ImVec2(0.0f, 3.0f));
-      ImGui::TextSeparator("Frame Generation Settings");
-      showDLFGOptions(ctx);
-    }
+    // NV-DXVK: DLFG disabled for stability - hiding Frame Generation UI
+    // if (dlfgSupported) {
+    //   ImGui::Dummy(ImVec2(0.0f, 3.0f));
+    //   ImGui::TextSeparator("Frame Generation Settings");
+    //   showDLFGOptions(ctx);
+    // }
 
     if (reflexInitialized) {
       ImGui::Dummy(ImVec2(0.0f, 3.0f));

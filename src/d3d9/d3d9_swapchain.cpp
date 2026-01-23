@@ -402,6 +402,11 @@ namespace dxvk {
 
   // NV-DXVK start: DLFG integration
   bool D3D9SwapChainEx::NeedRecreatePresenter() {
+    // NV-DXVK: DLFG disabled for stability - always use regular presenter
+    if (m_presenter == nullptr) {
+      return true;
+    }
+    /* Original DLFG code:
     if (m_context->isDLFGEnabled()) {
       if (m_dlfgPresenter == nullptr) {
         return true;
@@ -415,11 +420,14 @@ namespace dxvk {
     // one must be null, one must be non-null
     assert(m_presenter != nullptr || m_dlfgPresenter != nullptr);
     assert(m_presenter == nullptr || m_dlfgPresenter == nullptr);
+    */
     return false;
   }
 
   vk::Presenter* D3D9SwapChainEx::GetPresenter() const {
-    const auto presenter = m_presenter != nullptr ? m_presenter.ptr() : m_dlfgPresenter.ptr();
+    // NV-DXVK: DLFG disabled for stability - always use regular presenter
+    // const auto presenter = m_presenter != nullptr ? m_presenter.ptr() : m_dlfgPresenter.ptr();
+    const auto presenter = m_presenter.ptr();
 
     // Note: The returned presenter must be non-null as one of the two presenters must be non-null at all times,
     // and because code will blindly dereference this returned pointer.
@@ -1354,8 +1362,8 @@ namespace dxvk {
     m_presentStatus.result = VK_SUCCESS;
 
     // NV-DXVK start: DLFG integration
-    m_dlfgPresenter = nullptr;
-    const bool dlfgEnabled = m_context->isDLFGEnabled();
+    // NV-DXVK: DLFG disabled for stability - force dlfgEnabled to false
+    const bool dlfgEnabled = false; // m_context->isDLFGEnabled();
     DxvkDeviceQueue presentQueue = dlfgEnabled ? m_device->queues().present : m_device->queues().graphics;
     
     vk::PresenterDevice presenterDevice;

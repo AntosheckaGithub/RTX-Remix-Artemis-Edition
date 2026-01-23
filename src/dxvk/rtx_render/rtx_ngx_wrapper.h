@@ -86,7 +86,8 @@ namespace dxvk {
     }
 
     bool supportsDLFG() {
-      return m_supportsDLFG;
+      return false; // NV-DXVK: DLFG disabled for stability
+      // return m_supportsDLFG;
     }
 
     uint32_t dlfgMaxInterpolatedFrames() {
