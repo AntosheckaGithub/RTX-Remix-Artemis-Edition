@@ -335,6 +335,27 @@ struct RaytraceArgs {
   float reSTIRGISampleValidationThreshold;
   float reSTIRGIVisibilityValidationRange;
 
+  // ReSTIR-FG (Final Gather) settings
+  uint enableReSTIRFG;
+  uint restirFGPhotonsPerFrame;
+  float restirFGPhotonRadius;
+  float restirFGCausticPhotonRadius;
+  float restirFGRoughnessThreshold;
+  uint restirFGResamplingMode;
+  uint restirFGSpatialSamples;
+  float restirFGSpatialRadius;
+  uint restirFGCausticSpatialSamples;
+  float restirFGCausticSpatialRadius;
+  uint restirFGCausticMode;
+  uint restirFGBiasCorrectionMode;
+  float restirFGPairwiseMISCentralWeight;
+  uint restirFGTemporalHistoryLength;
+  float restirFGNormalThreshold;
+  float restirFGDepthThreshold;
+  float restirFGMaxLuminance;
+  uint restirFGMaxPhotonBounces;
+  float restirFGMinPhotonContribution;
+
   uint surfaceCount;
   uint teleportationPortalIndex; // 0 means no teleportation, 1+ means portal 0+
 
