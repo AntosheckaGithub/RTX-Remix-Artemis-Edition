@@ -2,9 +2,9 @@ name: Build
 
 on:
   push:
-    branches: [ main, 'release/**' ]
+    branches: [ ReStir-FG, 'release/**' ]
   pull_request:
-    branches: [ main, 'release/**' ]
+    branches: [ ReStir-FG, 'release/**' ]
 
 jobs:
   build-windows:
