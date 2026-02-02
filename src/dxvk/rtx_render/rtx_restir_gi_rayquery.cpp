@@ -171,6 +171,48 @@ namespace dxvk {
   }
 
   DxvkReSTIRGIRayQuery::DxvkReSTIRGIRayQuery(DxvkDevice* device): RtxPass(device) {
+    // Initialize all parameters to ensure they have valid default values
+    // This prevents displaying garbage values in ImGui before first use
+    useTemporalReuse.setDeferred(true);
+    useSpatialReuse.setDeferred(true);
+    useFinalVisibility.setDeferred(true);
+    misMode.setDeferred(ReSTIRGIMIS::Parallax);
+    misRoughness.setDeferred(0.3f);
+    parallaxAmount.setDeferred(0.02f);
+    useVirtualSample.setDeferred(true);
+    virtualSampleLuminanceThreshold.setDeferred(2.0f);
+    virtualSampleRoughnessThreshold.setDeferred(0.2f);
+    virtualSampleSpecularThreshold.setDeferred(0.5f);
+    virtualSampleMaxDistanceRatio.setDeferred(0.0f);
+    useTemporalBiasCorrection.setDeferred(true);
+    biasCorrectionMode.setDeferred(ReSTIRGIBiasCorrection::PairwiseRaytrace);
+    pairwiseMISCentralWeight.setDeferred(0.1f);
+    useDemodulatedTargetFunction.setDeferred(false);
+    usePermutationSampling.setDeferred(true);
+    useDLSSRRCompatibilityMode.setDeferred(false);
+    DLSSRRTemporalRandomizationRadius.setDeferred(80);
+    useSampleStealing.setDeferred(ReSTIRGISampleStealing::StealPixel);
+    sampleStealingJitter.setDeferred(0.0f);
+    stealBoundaryPixelSamplesWhenOutsideOfScreen.setDeferred(true);
+    useDiscardEnlargedPixels.setDeferred(true);
+    historyDiscardStrength.setDeferred(0.0f);
+    useTemporalJacobian.setDeferred(true);
+    useReflectionReprojection.setDeferred(true);
+    reflectionMinParallax.setDeferred(3.0f);
+    useBoilingFilter.setDeferred(true);
+    boilingFilterMinThreshold.setDeferred(10.0f);
+    boilingFilterMaxThreshold.setDeferred(20.0f);
+    boilingFilterRemoveReservoirThreshold.setDeferred(62.0f);
+    useAdaptiveTemporalHistory.setDeferred(true);
+    temporalAdaptiveHistoryLengthMs.setDeferred(500);
+    temporalFixedHistoryLength.setDeferred(30);
+    permutationSamplingSize.setDeferred(2);
+    fireflyThreshold.setDeferred(50.f);
+    roughnessClamp.setDeferred(0.01f);
+    validateLightingChange.setDeferred(true);
+    validateVisibilityChange.setDeferred(false);
+    lightingValidationThreshold.setDeferred(0.5f);
+    visibilityValidationRange.setDeferred(0.05f);
   }
 
   void DxvkReSTIRGIRayQuery::showImguiSettings() {
@@ -241,6 +283,13 @@ namespace dxvk {
 
     // Legacy temporal reprojection
     useDLSSRRCompatibilityMode.setDeferred(false);
+
+    // Ensure all other parameters have proper default values
+    fireflyThreshold.setDeferred(50.f);
+    roughnessClamp.setDeferred(0.01f);
+    temporalFixedHistoryLength.setDeferred(30);
+    temporalAdaptiveHistoryLengthMs.setDeferred(500);
+    permutationSamplingSize.setDeferred(2);
   }
 
   void DxvkReSTIRGIRayQuery::setToRayReconstructionPreset() {
@@ -270,6 +319,13 @@ namespace dxvk {
 
     // Randomize temporal reprojection to reduce coherency
     useDLSSRRCompatibilityMode.setDeferred(true);
+
+    // Ensure all other parameters have proper default values
+    fireflyThreshold.setDeferred(50.f);
+    roughnessClamp.setDeferred(0.01f);
+    temporalFixedHistoryLength.setDeferred(30);
+    temporalAdaptiveHistoryLengthMs.setDeferred(500);
+    permutationSamplingSize.setDeferred(2);
   }
 
   void DxvkReSTIRGIRayQuery::bindIntegrateIndirectPathTracingResources(RtxContext& ctx) {
